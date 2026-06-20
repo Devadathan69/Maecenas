@@ -8,10 +8,10 @@ export const metadata: Metadata = {
 };
 
 const navItems = [
-  { href: "/ask", label: "Quaere" },
-  { href: "/sources", label: "Fontes" },
-  { href: "/dashboard", label: "Tabularium" },
-  { href: "/leaderboard", label: "Fasti" }
+  { href: "/ask", label: "Ask" },
+  { href: "/sources", label: "Sources" },
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/leaderboard", label: "Leaderboard" }
 ];
 
 export default function RootLayout({
@@ -31,8 +31,8 @@ export default function RootLayout({
                 </span>
                 <span>
                   <span className="roman-inscription block text-xl leading-5 text-cream">Mecenas</span>
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-bronze">
-                    tabularium mercedis
+                  <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-marble/70">
+                    autonomous research ledger
                   </span>
                 </span>
               </Link>

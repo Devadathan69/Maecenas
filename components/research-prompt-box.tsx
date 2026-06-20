@@ -51,7 +51,7 @@ export function ResearchPromptBox() {
 
   return (
     <form onSubmit={submitResearch} className="roman-panel p-5">
-      <label className="font-mono text-xs uppercase tracking-[0.18em] text-gold" htmlFor="question">
+      <label className="font-mono text-xs uppercase tracking-[0.18em] text-marble/75" htmlFor="question">
         Research question
       </label>
       <textarea
@@ -59,7 +59,7 @@ export function ResearchPromptBox() {
         value={question}
         onChange={(event) => setQuestion(event.target.value)}
         rows={5}
-        className="mt-3 w-full resize-none border border-white/10 bg-ink-2 p-4 text-lg leading-7 text-cream outline-none transition placeholder:text-dim focus:border-gold/50"
+        className="mt-3 w-full resize-none border border-marble/10 bg-ink-2 p-4 text-lg leading-7 text-cream outline-none transition placeholder:text-dim focus:border-marble/50"
       />
       <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_1.2fr_auto]">
         <label className="block">
@@ -67,7 +67,7 @@ export function ResearchPromptBox() {
           <input
             value={budgetUSDC}
             onChange={(event) => setBudgetUSDC(event.target.value)}
-            className="mt-2 w-full border border-white/10 bg-ink-2 px-3 py-3 font-mono text-sm text-cream outline-none focus:border-gold/50"
+            className="mt-2 w-full border border-marble/10 bg-ink-2 px-3 py-3 font-mono text-sm text-cream outline-none focus:border-marble/50"
           />
         </label>
         <label className="block">
@@ -75,7 +75,7 @@ export function ResearchPromptBox() {
           <select
             value={strategy}
             onChange={(event) => setStrategy(event.target.value as ResearchStrategy)}
-            className="mt-2 w-full border border-white/10 bg-ink-2 px-3 py-3 font-mono text-sm text-cream outline-none focus:border-gold/50"
+            className="mt-2 w-full border border-marble/10 bg-ink-2 px-3 py-3 font-mono text-sm text-cream outline-none focus:border-marble/50"
           >
             <option value="conservative">Conservative</option>
             <option value="balanced">Balanced</option>
@@ -85,14 +85,14 @@ export function ResearchPromptBox() {
         <button
           type="submit"
           disabled={loading}
-          className="roman-button mt-6 inline-flex items-center justify-center gap-2 bg-gold px-5 py-3 font-mono text-xs font-semibold uppercase text-ink transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-70 sm:mt-auto"
+          className="roman-button mt-6 inline-flex items-center justify-center gap-2 bg-marble px-5 py-3 font-mono text-xs font-semibold uppercase text-ink transition hover:bg-cream disabled:cursor-not-allowed disabled:opacity-70 sm:mt-auto"
         >
           <Search size={16} />
           Ask
         </button>
       </div>
       {loading ? (
-        <div className="mt-5 border border-gold/20 bg-gold/10 p-4 font-mono text-sm text-gold">
+        <div className="mt-5 border border-marble/20 bg-marble/10 p-4 font-mono text-sm text-marble">
           {loadingSteps[stepIndex]}
         </div>
       ) : null}
