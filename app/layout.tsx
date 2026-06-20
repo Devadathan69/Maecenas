@@ -26,8 +26,8 @@ export default function RootLayout({
           <header className="sticky top-0 z-40 border-b border-marble/10 bg-ink/88 backdrop-blur">
             <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
               <Link href="/" className="flex items-center gap-3">
-                <span className="coin-surface flex h-9 w-9 items-center justify-center rounded-full text-sm font-black text-ink shadow-gold ring-1 ring-bronze/40">
-                  V
+                <span className="coin-surface flex h-9 w-9 items-center justify-center rounded-full text-sm font-black text-ink shadow-gold ring-1 ring-marble/40">
+                  M
                 </span>
                 <span>
                   <span className="roman-inscription block text-xl leading-5 text-cream">Mecenas</span>
@@ -41,7 +41,7 @@ export default function RootLayout({
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="px-4 py-2 transition hover:bg-bronze/10 hover:text-cream"
+                    className="px-4 py-2 transition hover:bg-marble/10 hover:text-cream"
                   >
                     {item.label}
                   </Link>

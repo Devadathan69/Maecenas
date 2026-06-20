@@ -13,10 +13,10 @@ const config: Config = {
         "ink-2": "#080604",
         panel: "#120e09",
         "panel-2": "#191208",
-        gold: "#d9a24a",
-        "gold-soft": "#e7bd6c",
-        "gold-deep": "#7d4b22",
-        bronze: "#af7b31",
+        gold: "#d8cfbf",
+        "gold-soft": "#efe4cf",
+        "gold-deep": "#8d8274",
+        bronze: "#b8afa2",
         marble: "#d8cfbf",
         cream: "#efe4cf",
         muted: "#9b9182",
@@ -30,7 +30,7 @@ const config: Config = {
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"]
       },
       boxShadow: {
-        gold: "0 0 0 1px rgba(242,193,78,0.16), 0 24px 80px rgba(0,0,0,0.45)"
+        gold: "0 0 0 1px rgba(216,207,191,0.22), 0 24px 80px rgba(0,0,0,0.45)"
       }
     }
   },

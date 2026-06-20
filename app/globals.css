@@ -35,15 +35,15 @@ a {
 }
 
 ::selection {
-  background: rgba(242, 193, 78, 0.3);
-  color: #f4efe2;
+  background: rgba(216, 207, 191, 0.28);
+  color: #030201;
 }
 
 .coin-surface {
   background:
-    radial-gradient(circle at 34% 28%, rgba(255, 230, 159, 0.42), transparent 0.8rem),
-    radial-gradient(circle at 68% 70%, rgba(86, 48, 22, 0.5), transparent 1.3rem),
-    linear-gradient(135deg, #d9a24a 0%, #7d4b22 100%);
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.82), transparent 0.85rem),
+    radial-gradient(circle at 70% 74%, rgba(91, 83, 73, 0.38), transparent 1.25rem),
+    linear-gradient(135deg, #efe7db 0%, #c9beae 48%, #7d7368 100%);
 }
 
 .terminal-grid {
