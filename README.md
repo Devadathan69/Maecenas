@@ -1,63 +1,285 @@
 # Mecenas
 
-Scholarly agents that pay their sources.
+**Scholarly agents that pay their sources.**
 
-Mecenas turns scholarly sources into x402-priced evidence endpoints, and gives AI agents a budget to buy the most useful evidence before answering.
+Mecenas is a research/payment agent demo. A user asks a research question, the agent searches registered sources, scores which evidence is worth buying, unlocks selected evidence through a 402/x402-shaped payment flow, writes a cited answer, and stores paid citation receipts for source owners.
 
-This is a Lepton Agents Hackathon MVP for budgeted AI-agent source payments. A user asks a research question, the agent searches registered sources, scores relevance and price, skips weak sources, pays for selected evidence, generates a cited answer, and records receipt cards for source owners.
-
-## Why Mecenas Exists
-
-AI agents increasingly use papers, docs, blogs, datasets, and technical writing as research input. The source creator is usually only cited after the value has already been extracted.
-
-Mecenas demonstrates a different loop:
+The core product idea:
 
 ```txt
-Source registers
-→ Agent discovers source
-→ Agent scores relevance and price
-→ Agent decides what to buy
-→ Agent pays with USDC nanopayments
-→ Evidence unlocks
-→ Agent cites source
-→ Source owner sees earnings
+Most AI tools cite sources after using them.
+Mecenas pays sources before using protected evidence.
 ```
 
-Mecenas is an experimental attribution and payment layer for AI-agent source usage. It does not verify academic ownership, replace journals, prove truth, or solve peer review.
+## Current App
 
-## Hackathon Fit
-
-- Agentic sophistication: explicit modules for planning, scouting, scoring, budget allocation, payment execution, synthesis, and receipt writing.
-- Traction: public leaderboard with sources, owners, paid evidence unlocks, answers, and test USDC distributed.
-- Circle/Arc usage: x402-shaped evidence endpoint, HTTP 402 challenge, USDC amount, payer wallet, recipient wallet, payment ID, and receipt.
-- Innovation: sources become paid evidence endpoints, and the agent pays before using protected evidence.
-
-## Architecture
+The project is now split into a **Next.js frontend** and a **standalone Node.js backend**.
 
 ```txt
-Next.js App Router
-├─ app/                      Next.js frontend routing layer: pages and layout
-├─ frontend/                 UI components and client-side interaction surfaces
-├─ backend/server.ts         standalone Node.js backend entrypoint
-├─ backend/http.ts           Node HTTP API router
-├─ backend/types.ts          shared domain contracts
-├─ backend/db/               JSON persistence and seed sources
-├─ backend/agent/
-│  ├─ query-planner.ts
-│  ├─ source-scout.ts
-│  ├─ source-scorer.ts
-│  ├─ budget-allocator.ts
-│  ├─ answer-synthesizer.ts
-│  ├─ trace.ts
-│  └─ research-agent.ts
-├─ backend/payments/         x402/Gateway-shaped payment loop
-├─ scripts/dev-all.mjs       starts frontend and backend together
-└─ scripts/seed.ts           reset local demo data
+Frontend: http://localhost:3000
+Backend:  http://localhost:4000
 ```
 
-Local persistence is `data/db.json`, generated at runtime and ignored by git. The code is intentionally modular so each agent decision can be read and debugged independently. The `app/` directory is now frontend-only because Next.js owns routing conventions; product UI lives in `frontend/`, while source registry, agent, payment, HTTP API, and persistence logic lives in `backend/`.
+The frontend talks to the backend through `NEXT_PUBLIC_API_BASE_URL`, defaulting to `http://localhost:4000`.
 
-## Agent Decision Flow
+## What The Product Does
+
+End-to-end demo flow:
+
+```txt
+1. Source owner registers a source.
+2. Source gets a free preview endpoint and protected evidence endpoint.
+3. User asks a research question.
+4. Mecenas plans the research.
+5. Mecenas searches registered sources.
+6. Mecenas scores relevance, fit, novelty, and price efficiency.
+7. Mecenas buys selected sources and skips weaker ones.
+8. Protected evidence endpoint returns 402 Payment Required.
+9. Agent sends a mock-labeled x402/USDC payment proof.
+10. Evidence unlocks.
+11. Answer is generated with citations, trace, budget, and receipts.
+12. Dashboard and leaderboard update.
+```
+
+MVP payment mode is mock-labeled by default. Real Circle/Arc settlement is a future integration point.
+
+## Folder Map
+
+```txt
+app/
+  Next.js frontend routing layer.
+  Keep pages/layouts here because Next.js App Router requires it.
+  No backend API routes live here anymore.
+
+frontend/
+  Frontend-owned code.
+  Reusable components, client forms, API client, presentation logic.
+
+backend/
+  Backend-owned code.
+  Standalone Node HTTP server, agent logic, DB store, payment executor, types.
+
+scripts/
+  Dev helper scripts and seed script.
+
+data/
+  Local JSON database generated at runtime. Ignored by git.
+```
+
+Important files:
+
+```txt
+frontend/api.ts                         Frontend API client for Node backend
+backend/server.ts                       Node backend entrypoint
+backend/http.ts                         HTTP router and API endpoints
+backend/agent/research-agent.ts         Agent orchestrator
+backend/payments/payment-executor.ts    402/x402-shaped payment flow
+backend/db/store.ts                     Local JSON persistence
+backend/types.ts                        Shared app/domain types
+```
+
+## Frontend Dev Handoff
+
+The frontend dev should mostly work in:
+
+```txt
+frontend/components/
+frontend/api.ts
+app/page.tsx
+app/ask/page.tsx
+app/answer/[id]/page.tsx
+app/sources/page.tsx
+app/sources/new/page.tsx
+app/dashboard/page.tsx
+app/leaderboard/page.tsx
+app/receipts/[id]/page.tsx
+app/layout.tsx
+app/globals.css
+tailwind.config.ts
+```
+
+Frontend should avoid changing:
+
+```txt
+backend/agent/
+backend/db/
+backend/http.ts
+backend/payments/
+backend/server.ts
+```
+
+Frontend responsibilities:
+
+- Make the app feel chat-first and intelligent, closer to an autonomous research agent.
+- Keep the visual language black/marble/cream/stone, with no yellow/gold glow.
+- Improve responsive layout and page polish.
+- Make agent activity visible without exposing private chain-of-thought.
+- Preserve the structured trace: planning, scouting, scoring, budget allocation, 402 payment, evidence unlocked, receipt saved.
+- Use `frontend/api.ts` for backend calls instead of calling backend URLs ad hoc.
+
+Frontend run command:
+
+```bash
+npm run dev:frontend
+```
+
+The frontend expects the backend to already be running on port `4000`.
+
+## Backend / Product Owner Handoff
+
+Backend/product work lives in:
+
+```txt
+backend/
+scripts/
+.env.example
+```
+
+Backend responsibilities:
+
+- Maintain the standalone Node API server.
+- Maintain the research agent modules.
+- Maintain source registration, answers, receipts, and leaderboard data.
+- Replace mock payments with real Circle/Arc/x402 integration later.
+- Replace JSON persistence with Postgres later.
+- Add auth, wallet ownership, and source verification later.
+
+Backend run command:
+
+```bash
+npm run dev:backend
+```
+
+Backend health check:
+
+```bash
+curl http://localhost:4000/api/health
+```
+
+## App Routes
+
+Frontend pages:
+
+```txt
+/                         Landing page with research prompt
+/ask                      Research question page
+/answer/:id               Answer, citations, trace, budget, receipts
+/sources                  Public source registry
+/sources/new              Source registration
+/dashboard?wallet=0x...   Source-owner earnings dashboard
+/leaderboard              Public traction/payment dashboard
+/receipts/:id             Public paid citation receipt
+```
+
+Backend API:
+
+```txt
+GET  /api/health
+
+POST /api/sources
+GET  /api/sources
+GET  /api/sources/:id
+GET  /api/sources/:id/preview
+GET  /api/sources/:id/evidence
+
+POST /api/research
+GET  /api/answers/:id
+
+GET  /api/receipts/:id
+GET  /api/dashboard?wallet=0x...
+GET  /api/leaderboard
+
+POST /api/admin/seed
+```
+
+## Local Setup
+
+```bash
+npm install
+cp .env.example .env
+npm run seed
+npm run dev
+```
+
+`npm run dev` starts both services:
+
+```txt
+Backend on  http://localhost:4000
+Frontend on http://localhost:3000
+```
+
+Run separately:
+
+```bash
+npm run dev:backend
+npm run dev:frontend
+```
+
+If port `3000` is occupied, Next may use `3001`. That is okay for local dev. The backend CORS handler allows localhost dev ports by default unless `CORS_ORIGIN` is fixed in `.env`.
+
+## Environment Variables
+
+Minimum local `.env`:
+
+```txt
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_API_BASE_URL=http://localhost:4000
+BACKEND_PORT=4000
+CORS_ORIGIN=http://localhost:3000
+X402_NETWORK=arc-testnet
+NEXT_PUBLIC_PAYMENT_MODE=mock
+```
+
+Reserved for real integrations:
+
+```txt
+DATABASE_URL=
+OPENAI_API_KEY=
+ANTHROPIC_API_KEY=
+GROQ_API_KEY=
+
+ARC_RPC_URL=
+ARC_CHAIN_ID=
+
+CIRCLE_API_KEY=
+CIRCLE_WALLET_ID=
+CIRCLE_ENTITY_SECRET=
+
+MECENAS_AGENT_PRIVATE_KEY=
+MECENAS_AGENT_WALLET_ADDRESS=
+
+GATEWAY_API_URL=
+```
+
+## Verification
+
+Before pushing:
+
+```bash
+npm run lint
+npm run typecheck
+npm run build
+```
+
+Backend smoke tests:
+
+```bash
+curl http://localhost:4000/api/health
+
+curl -i http://localhost:4000/api/sources/src_gateway_agents/evidence
+
+curl -X POST http://localhost:4000/api/research \
+  -H "Content-Type: application/json" \
+  -d '{"question":"Explain why nanopayments matter for AI agents.","budgetUSDC":"0.01","strategy":"balanced"}'
+```
+
+Expected:
+
+- `/api/health` returns healthy JSON.
+- protected evidence returns `402 Payment Required` without payment proof.
+- research creates an answer ID and mock-labeled receipts.
+
+## Agent Architecture
 
 ```txt
 QueryPlanner
@@ -79,148 +301,38 @@ PaymentExecutor
 AnswerSynthesizer
   Writes an answer only after paid evidence is unlocked.
 
-ReceiptWriter
+Receipt storage
   Stores one receipt per paid citation.
-```
-
-## Payment Flow
-
-MVP payment mode defaults to clearly labeled mock mode unless real Circle credentials are present.
-
-```txt
-GET /api/sources/:id/evidence
-→ 402 Payment Required
-→ x402 metadata: network, asset, amount, recipient wallet, resource
-→ Mecenas creates payment authorization/proof
-→ retry evidence request with x-payment-proof
-→ evidence unlocks
-→ receipt is stored
-```
-
-The integration surface is isolated in `backend/payments/payment-executor.ts` so real Circle Gateway / Arc testnet calls can replace the mock proof path without changing the agent or UI contracts. The standalone backend runs on `http://localhost:4000` by default.
-
-## Pages
-
-- `/` landing page
-- `/ask` research question page
-- `/answer/:id` answer, citations, trace, budget, receipts, skipped sources
-- `/sources` public source registry
-- `/sources/new` source registration
-- `/dashboard?wallet=0x...` source owner earnings dashboard
-- `/leaderboard` public traction and payment dashboard
-- `/receipts/:id` public citation/payment receipt
-
-## API Routes
-
-- `GET /api/health`
-- `POST /api/sources`
-- `GET /api/sources`
-- `GET /api/sources/:id`
-- `GET /api/sources/:id/preview`
-- `GET /api/sources/:id/evidence`
-- `POST /api/research`
-- `GET /api/answers/:id`
-- `GET /api/receipts/:id`
-- `GET /api/dashboard?wallet=0x...`
-- `GET /api/leaderboard`
-- `POST /api/admin/seed`
-
-## Local Setup
-
-```bash
-npm install
-cp .env.example .env
-npm run seed
-npm run dev
-```
-
-Open `http://localhost:3000`.
-
-Runtime services:
-
-```txt
-Frontend: http://localhost:3000
-Backend:  http://localhost:4000
-Health:   http://localhost:4000/api/health
-```
-
-To run them separately:
-
-```bash
-npm run dev:backend
-npm run dev:frontend
-```
-
-Useful checks:
-
-```bash
-npm run lint
-npm run typecheck
-npm run build
-```
-
-## Environment Variables
-
-Copy `.env.example` and fill real credentials when moving beyond mock mode.
-
-```txt
-DATABASE_URL=
-OPENAI_API_KEY=
-ANTHROPIC_API_KEY=
-GROQ_API_KEY=
-ARC_RPC_URL=
-ARC_CHAIN_ID=
-CIRCLE_API_KEY=
-CIRCLE_WALLET_ID=
-CIRCLE_ENTITY_SECRET=
-MECENAS_AGENT_PRIVATE_KEY=
-MECENAS_AGENT_WALLET_ADDRESS=
-GATEWAY_API_URL=
-X402_NETWORK=arc-testnet
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-NEXT_PUBLIC_API_BASE_URL=http://localhost:4000
-BACKEND_PORT=4000
-CORS_ORIGIN=http://localhost:3000
-NEXT_PUBLIC_PAYMENT_MODE=mock
 ```
 
 ## Demo Script
 
-1. Show `/`: "Mecenas is a scholarly AI agent that pays its sources."
-2. Open `/sources/new` and register a source priced at `0.0001` USDC.
-3. Open `/ask` and ask: "Explain why nanopayments matter for AI agents."
-4. Show planning, source scoring, selected sources, skipped sources, 402 challenge, mock payment, evidence unlock, and receipt saved.
-5. Open the generated `/answer/:id`.
-6. Open a `/receipts/:id` page.
-7. Open `/dashboard?wallet=<source-wallet>`.
-8. Open `/leaderboard` for public traction metrics.
+1. Open `/`.
+2. Ask: `Explain why nanopayments matter for AI agents.`
+3. Show the generated answer page.
+4. Point out selected sources, skipped sources, score table, budget meter, and receipts.
+5. Open `/sources/new` and register a source.
+6. Open `/dashboard?wallet=<source-wallet>`.
+7. Open `/leaderboard`.
 
-## Traction Metrics
+## Known Limitations
 
-The leaderboard tracks:
+- Payments are mock-labeled unless real Circle/Arc credentials are added.
+- Source ownership is not verified.
+- The answer synthesizer is deterministic and can be replaced by an LLM adapter.
+- Local persistence is JSON in `data/db.json`; production should use Postgres.
+- No auth yet.
 
-- Sources registered
-- Source owners
-- Research questions answered
-- Paid evidence unlocks
-- Test USDC distributed
-- Top earning sources
-- Recent payment stream
+## Production Path
 
-## Limitations
+Recommended next steps:
 
-- Mock payment mode is used unless real Circle credentials are configured.
-- Source ownership and academic identity are not verified.
-- The answer synthesizer is deterministic for the MVP and can be replaced with an LLM adapter.
-- JSON-file persistence is used for local speed; move to Postgres/Supabase/Neon for production.
-
-## Future Work
-
-- Real Circle Gateway / Arc testnet settlement
-- OpenAlex and Crossref metadata enrichment
-- ORCID verification
-- Multi-author splits
-- Dataset and PDF payments
-- Public source marketplace
-- Citation reputation
-- Telegram or email earning notifications
+```txt
+1. Add Postgres with Prisma or Drizzle.
+2. Add wallet auth for source owners.
+3. Replace mock payment proof with real Circle Gateway/x402.
+4. Add source ingestion from RSSHub/Ghost/technical blogs.
+5. Add embeddings or hybrid search.
+6. Add moderation and duplicate-source detection.
+7. Deploy frontend and backend separately.
+```
