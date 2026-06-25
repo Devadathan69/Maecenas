@@ -1,5 +1,5 @@
-import type { CitationPayment, Source } from "@/lib/types";
-import { makeId } from "@/lib/utils/ids";
+import type { CitationPayment, Source } from "@/backend/types";
+import { makeId } from "@/backend/utils/ids";
 
 const agentName = "Mecenas Scholar v1";
 const mockWallet = "0xMecenasAgent000000000000000000000000000001";

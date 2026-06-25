@@ -1,4 +1,4 @@
-import type { BudgetDecision, ResearchPlan, UnlockedEvidence } from "@/lib/types";
+import type { BudgetDecision, ResearchPlan, UnlockedEvidence } from "@/backend/types";
 
 export function synthesizeAnswer(
   plan: ResearchPlan,

@@ -1,7 +1,7 @@
-import { DashboardEarningsTable } from "@/components/dashboard-earnings-table";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { readDb } from "@/lib/db/store";
-import { sumUSDC } from "@/lib/utils/money";
+import { DashboardEarningsTable } from "@/frontend/components/dashboard-earnings-table";
+import { SectionHeading } from "@/frontend/components/ui/section-heading";
+import { readDb } from "@/backend/db/store";
+import { sumUSDC } from "@/backend/utils/money";
 
 export const dynamic = "force-dynamic";
 

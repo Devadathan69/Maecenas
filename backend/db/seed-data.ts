@@ -1,4 +1,4 @@
-import type { Source } from "@/lib/types";
+import type { Source } from "@/backend/types";
 
 const createdAt = "2026-06-20T00:00:00.000Z";
 

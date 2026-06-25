@@ -1,8 +1,8 @@
-import { LeaderboardStats } from "@/components/leaderboard-stats";
-import { RecentPaymentsFeed } from "@/components/recent-payments-feed";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { readDb } from "@/lib/db/store";
-import { sumUSDC } from "@/lib/utils/money";
+import { LeaderboardStats } from "@/frontend/components/leaderboard-stats";
+import { RecentPaymentsFeed } from "@/frontend/components/recent-payments-feed";
+import { SectionHeading } from "@/frontend/components/ui/section-heading";
+import { readDb } from "@/backend/db/store";
+import { sumUSDC } from "@/backend/utils/money";
 
 export const dynamic = "force-dynamic";
 

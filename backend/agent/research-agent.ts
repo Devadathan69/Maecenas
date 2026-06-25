@@ -1,14 +1,14 @@
-import { allocateBudget } from "@/lib/agent/budget-allocator";
-import { planResearch } from "@/lib/agent/query-planner";
-import { scoutSources } from "@/lib/agent/source-scout";
-import { scoreSources } from "@/lib/agent/source-scorer";
-import { synthesizeAnswer } from "@/lib/agent/answer-synthesizer";
-import { traceEvent } from "@/lib/agent/trace";
-import { createAnswer, createReceipts, listSources } from "@/lib/db/store";
-import { createEvidencePayment, getPaymentMode, requestProtectedEvidence } from "@/lib/payments/payment-executor";
-import type { Answer, ResearchStrategy, ResearchTrace, Source, TraceEvent, UnlockedEvidence } from "@/lib/types";
-import { makeId } from "@/lib/utils/ids";
-import { sumUSDC } from "@/lib/utils/money";
+import { allocateBudget } from "@/backend/agent/budget-allocator";
+import { planResearch } from "@/backend/agent/query-planner";
+import { scoutSources } from "@/backend/agent/source-scout";
+import { scoreSources } from "@/backend/agent/source-scorer";
+import { synthesizeAnswer } from "@/backend/agent/answer-synthesizer";
+import { traceEvent } from "@/backend/agent/trace";
+import { createAnswer, createReceipts, listSources } from "@/backend/db/store";
+import { createEvidencePayment, getPaymentMode, requestProtectedEvidence } from "@/backend/payments/payment-executor";
+import type { Answer, ResearchStrategy, ResearchTrace, Source, TraceEvent, UnlockedEvidence } from "@/backend/types";
+import { makeId } from "@/backend/utils/ids";
+import { sumUSDC } from "@/backend/utils/money";
 
 type RunResearchInput = {
   question: string;

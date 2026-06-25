@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import { PaymentReceiptCard } from "@/components/payment-receipt-card";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { findReceipt } from "@/lib/db/store";
+import { PaymentReceiptCard } from "@/frontend/components/payment-receipt-card";
+import { SectionHeading } from "@/frontend/components/ui/section-heading";
+import { findReceipt } from "@/backend/db/store";
 
 export const dynamic = "force-dynamic";
 

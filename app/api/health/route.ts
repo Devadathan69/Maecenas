@@ -1,4 +1,4 @@
-import { json } from "@/lib/api/json";
+import { json } from "@/backend/api/json";
 
 export async function GET() {
   return json({

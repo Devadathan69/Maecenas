@@ -1,5 +1,5 @@
-import { json } from "@/lib/api/json";
-import { resetDbWithSeeds } from "@/lib/db/store";
+import { json } from "@/backend/api/json";
+import { resetDbWithSeeds } from "@/backend/db/store";
 
 export async function POST() {
   const db = await resetDbWithSeeds();

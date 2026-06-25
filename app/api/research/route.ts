@@ -1,6 +1,6 @@
-import { badRequest, json } from "@/lib/api/json";
-import { runResearchAgent } from "@/lib/agent/research-agent";
-import type { ResearchStrategy } from "@/lib/types";
+import { badRequest, json } from "@/backend/api/json";
+import { runResearchAgent } from "@/backend/agent/research-agent";
+import type { ResearchStrategy } from "@/backend/types";
 
 const strategies = new Set(["conservative", "balanced", "aggressive"]);
 

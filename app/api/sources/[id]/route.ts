@@ -1,5 +1,5 @@
-import { json, notFound } from "@/lib/api/json";
-import { findSource } from "@/lib/db/store";
+import { json, notFound } from "@/backend/api/json";
+import { findSource } from "@/backend/db/store";
 
 type Params = {
   params: Promise<{ id: string }>;

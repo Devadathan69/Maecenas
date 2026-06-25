@@ -1,6 +1,6 @@
-import { json, notFound } from "@/lib/api/json";
-import { findSource } from "@/lib/db/store";
-import { buildPaymentRequired, hasValidPaymentProof } from "@/lib/payments/payment-executor";
+import { json, notFound } from "@/backend/api/json";
+import { findSource } from "@/backend/db/store";
+import { buildPaymentRequired, hasValidPaymentProof } from "@/backend/payments/payment-executor";
 
 type Params = {
   params: Promise<{ id: string }>;

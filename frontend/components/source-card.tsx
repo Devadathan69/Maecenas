@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
-import type { Source } from "@/lib/types";
+import type { Source } from "@/backend/types";
 
 export function SourceCard({ source }: { source: Source }) {
   return (

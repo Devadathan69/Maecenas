@@ -1,7 +1,7 @@
-import { SourceCard } from "@/components/source-card";
-import { ButtonLink } from "@/components/ui/button-link";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { listSources } from "@/lib/db/store";
+import { SourceCard } from "@/frontend/components/source-card";
+import { ButtonLink } from "@/frontend/components/ui/button-link";
+import { SectionHeading } from "@/frontend/components/ui/section-heading";
+import { listSources } from "@/backend/db/store";
 
 export const dynamic = "force-dynamic";
 

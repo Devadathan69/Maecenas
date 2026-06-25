@@ -1,7 +1,7 @@
-import { badRequest, json } from "@/lib/api/json";
-import { createSource, listSources } from "@/lib/db/store";
-import type { Source } from "@/lib/types";
-import { makeId } from "@/lib/utils/ids";
+import { badRequest, json } from "@/backend/api/json";
+import { createSource, listSources } from "@/backend/db/store";
+import type { Source } from "@/backend/types";
+import { makeId } from "@/backend/utils/ids";
 
 export async function GET() {
   return json({ sources: await listSources() });

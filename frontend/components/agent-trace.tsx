@@ -1,4 +1,4 @@
-import type { ScoredSource, TraceEvent } from "@/lib/types";
+import type { ScoredSource, TraceEvent } from "@/backend/types";
 
 export function AgentTrace({ events, scoredSources }: { events: TraceEvent[]; scoredSources?: ScoredSource[] }) {
   return (

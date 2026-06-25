@@ -1,6 +1,6 @@
-import { json } from "@/lib/api/json";
-import { readDb } from "@/lib/db/store";
-import { sumUSDC } from "@/lib/utils/money";
+import { json } from "@/backend/api/json";
+import { readDb } from "@/backend/db/store";
+import { sumUSDC } from "@/backend/utils/money";
 
 export async function GET(request: Request) {
   const wallet = new URL(request.url).searchParams.get("wallet")?.toLowerCase() ?? "";

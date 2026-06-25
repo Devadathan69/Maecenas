@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
-import type { ResearchStrategy } from "@/lib/types";
+import type { ResearchStrategy } from "@/backend/types";
 
 const loadingSteps = [
   "Planning research...",

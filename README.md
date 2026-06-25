@@ -36,11 +36,11 @@ Mecenas is an experimental attribution and payment layer for AI-agent source usa
 
 ```txt
 Next.js App Router
-├─ app/                      pages and API routes
-├─ components/               small reusable UI components
-├─ lib/types.ts              shared domain contracts
-├─ lib/db/                   JSON persistence and seed sources
-├─ lib/agent/
+├─ app/                      Next.js routing layer: pages, layouts, and API route wrappers
+├─ frontend/                 UI components and client-side interaction surfaces
+├─ backend/types.ts          shared domain contracts
+├─ backend/db/               JSON persistence and seed sources
+├─ backend/agent/
 │  ├─ query-planner.ts
 │  ├─ source-scout.ts
 │  ├─ source-scorer.ts
@@ -48,11 +48,11 @@ Next.js App Router
 │  ├─ answer-synthesizer.ts
 │  ├─ trace.ts
 │  └─ research-agent.ts
-├─ lib/payments/             x402/Gateway-shaped payment loop
+├─ backend/payments/         x402/Gateway-shaped payment loop
 └─ scripts/seed.ts           reset local demo data
 ```
 
-Local persistence is `data/db.json`, generated at runtime and ignored by git. The code is intentionally modular so each agent decision can be read and debugged independently.
+Local persistence is `data/db.json`, generated at runtime and ignored by git. The code is intentionally modular so each agent decision can be read and debugged independently. The `app/` directory is intentionally thin because Next.js owns routing conventions; product UI lives in `frontend/`, while source registry, agent, payment, and persistence logic lives in `backend/`.
 
 ## Agent Decision Flow
 
@@ -94,7 +94,7 @@ GET /api/sources/:id/evidence
 → receipt is stored
 ```
 
-The integration surface is isolated in `lib/payments/payment-executor.ts` so real Circle Gateway / Arc testnet calls can replace the mock proof path without changing the agent or UI contracts.
+The integration surface is isolated in `backend/payments/payment-executor.ts` so real Circle Gateway / Arc testnet calls can replace the mock proof path without changing the agent or UI contracts.
 
 ## Pages
 
